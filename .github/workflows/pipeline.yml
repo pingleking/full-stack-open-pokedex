@@ -34,3 +34,6 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+      - name: deploy
+        if: ${{ github.event_name == 'push' }}
+        run: echo "haven't credit card, skip"
