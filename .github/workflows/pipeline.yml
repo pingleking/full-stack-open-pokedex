@@ -8,8 +8,12 @@ on:
     branches: [main]
     types: [opened, synchronize]
 
+env:
+  COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+
 jobs:
   simple_deployment_pipeline:
+    if: ${{ !contains(env.COMMIT_MESSAGES, '#skip') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
