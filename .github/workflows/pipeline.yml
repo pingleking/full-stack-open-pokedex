@@ -38,6 +38,24 @@ jobs:
       - name: deploy
         if: ${{ github.event_name == 'push' }}
         run: echo "haven't credit card, skip"
+      - name: a success indication
+        if: ${{ success() && github.event_name == 'push' }}
+        uses: rjstone/discord-webhook-notify@c2597273488aeda841dd1e891321952b51f7996f
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Actions
+          severity: info
+          title: Build Success
+          description: Successfully Build
+      - name: an error indication
+        if: ${{ failure() }}
+        uses: rjstone/discord-webhook-notify@c2597273488aeda841dd1e891321952b51f7996f
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Actions
+          severity: error
+          title: Build Failed
+          description: commit ${{ github.event.head_commit.url }} broke the build
   tag_release:
     if: ${{ github.event_name == 'push' }}
     needs: [simple_deployment_pipeline]
