@@ -55,7 +55,7 @@ jobs:
           username: GitHub Actions
           severity: error
           title: Build Failed
-          description: commit ${{ github.event.head_commit.url }} broke the build
+          description: commit ${{ github.event.head_commit.url }} broke the build :(
   tag_release:
     if: ${{ github.event_name == 'push' }}
     needs: [simple_deployment_pipeline]
