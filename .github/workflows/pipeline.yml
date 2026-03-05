@@ -40,22 +40,22 @@ jobs:
         run: echo "haven't credit card, skip"
       - name: a success indication
         if: ${{ success() && github.event_name == 'push' }}
-        uses: rjstone/discord-webhook-notify@c2597273488aeda841dd1e891321952b51f7996f
+        uses: sarisia/actions-status-discord@eb045afee445dc055c18d3d90bd0f244fd062708
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          username: GitHub Actions
-          severity: info
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          color: 0x00c40a
           title: Build Success
           description: Successfully Build
+          username: GitHub Actions
       - name: an error indication
         if: ${{ failure() }}
-        uses: rjstone/discord-webhook-notify@c2597273488aeda841dd1e891321952b51f7996f
+        uses: sarisia/actions-status-discord@eb045afee445dc055c18d3d90bd0f244fd062708
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          username: GitHub Actions
-          severity: error
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          color: 0xFF0000
           title: Build Failed
           description: commit ${{ github.event.head_commit.url }} broke the build :(
+          username: GitHub Actions
   tag_release:
     if: ${{ github.event_name == 'push' }}
     needs: [simple_deployment_pipeline]
